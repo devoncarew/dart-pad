@@ -25,6 +25,7 @@ replaceJavaScript = function(value) {
   // Remove the old node.
   var oldNode = document.getElementById('compiledJsScript');
   if (oldNode && oldNode.parentNode) {
+    console.log("removing " + oldNode);
     oldNode.parentNode.removeChild(oldNode);
   }
 
@@ -33,9 +34,11 @@ replaceJavaScript = function(value) {
   scriptNode.setAttribute('id', 'compiledJsScript');
   scriptNode.text = value;
   document.head.appendChild(scriptNode);
+  console.log("appending " + scriptNode);
 };
 
 messageHandler = function(e) {
+  console.log("messageHandler");
   var obj = e.data;
   var command = obj.command;
   var body = document.body;
@@ -45,6 +48,10 @@ messageHandler = function(e) {
   } else if (command === 'setHtml') {
     body.innerHTML = obj.html;
   } else if (command === 'execute') {
+    // console.log("EXECUTE");
+    // console.log("html: " + obj.html);
+    console.log("js: " + obj.js);
+    // console.log("css: " + obj.css);
     // Replace all three.
     body.innerHTML = obj.html;
     document.getElementById('styleId').innerHTML = obj.css;

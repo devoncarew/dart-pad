@@ -41,12 +41,10 @@ class ExecutionServiceIFrame implements ExecutionService {
     String javaScript, {
     String modulesBaseUrl,
   }) {
-    return _reset().whenComplete(() {
-      return _send('execute', {
-        'html': html,
-        'css': css,
-        'js': _decorateJavaScript(javaScript, modulesBaseUrl: modulesBaseUrl),
-      });
+    return _send('execute', {
+      'html': html,
+      'css': css,
+      'js': _decorateJavaScript(javaScript, modulesBaseUrl: modulesBaseUrl),
     });
   }
 
@@ -79,7 +77,7 @@ var resultFunction = _result;
 
   String _decorateJavaScript(String javaScript, {String modulesBaseUrl}) {
     final String postMessagePrint = '''
-const testKey = '$testKey';
+var testKey = '$testKey';
 
 function dartPrint(message) {
   if (message.startsWith(testKey)) {
@@ -92,6 +90,9 @@ function dartPrint(message) {
       {'sender': 'frame', 'type': 'stdout', 'message': message.toString()}, '*');
   }
 }
+// Unload previous version.
+console.log("unloading dartpad_main");
+require.undef('dartpad_main');
 ''';
 
     /// The javascript exception handling for Dartpad catches both errors
