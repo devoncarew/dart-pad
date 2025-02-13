@@ -103,6 +103,7 @@ class ProblemWidget extends StatelessWidget {
                 textAlign: TextAlign.end,
                 style: subtleText,
               ),
+              const SizedBox(width: denseSpacing),
               IconButton(
                 onPressed: () => _quickFixes(context),
                 tooltip: 'Quick fixes',

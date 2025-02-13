@@ -545,7 +545,12 @@ class _GeneratingCodeDialogState extends State<GeneratingCodeDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(widget.title),
-              if (!_done) const CircularProgressIndicator(),
+              if (!_done)
+                const SizedBox(
+                  width: defaultIconSize,
+                  height: defaultIconSize,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
             ],
           ),
           contentTextStyle: theme.textTheme.bodyMedium,

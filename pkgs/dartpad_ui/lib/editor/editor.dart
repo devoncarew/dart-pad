@@ -16,6 +16,7 @@ import 'package:web/web.dart' as web;
 
 import '../local_storage.dart';
 import '../model.dart';
+import '../theme.dart';
 import '../utils.dart';
 import 'codemirror.dart';
 
@@ -648,6 +649,9 @@ class ReadOnlyDiffWidget extends StatelessWidget {
   // keyboard shortcuts, e.g. cmd+enter
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkTheme = theme.brightness == Brightness.dark;
+
     return Focus(
       autofocus: true,
       child: SizedBox(
@@ -660,7 +664,14 @@ class ReadOnlyDiffWidget extends StatelessWidget {
             defaultTextStyle: GoogleFonts.robotoMono(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: Theme.of(context).textTheme.bodyMedium?.color,
+              color: theme.textTheme.bodyMedium?.color,
+            ),
+            addedTextStyle: TextStyle(
+              backgroundColor: isDarkTheme ? darkInfoColor : lightInfoColor,
+            ),
+            deletedTextStyle: TextStyle(
+              backgroundColor: isDarkTheme ? darkErrorColor : lightErrorColor,
+              decoration: TextDecoration.lineThrough,
             ),
             diffCleanupType: DiffCleanupType.SEMANTIC,
           ),
